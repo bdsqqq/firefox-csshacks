@@ -1,0 +1,16 @@
+/* Import your desired components first */
+
+
+@import url(chrome/tabs_on_bottom.css);
+@import url(chrome/tabs_on_bottom_menubar_on_top_patch);
+@import url(chrome/window_control_placeholder_support.css);
+
+@import url(chrome/autohide_toolbox.css);
+
+@import url(chrome/hide_toolbox_top_bottom_borders.css);
+/* 
+@import url(chrome/compact_urlbar_megabar.css);
+@import url(chrome/compact_proton.css); */
+
+/* Apply your custom modifications after imports */
+
