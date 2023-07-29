@@ -39,6 +39,7 @@ See the above repository for updates as well as full license text. */
     max-height: calc((var(--tab-min-height) + 2 * var(--tab-block-margin,0px)) * var(--multirow-n-rows));
     scrollbar-color: currentColor transparent;
     scrollbar-width: thin;
+    scrollbar-gutter: stable;
     scroll-snap-type: y mandatory;
   }
 }
@@ -59,7 +60,7 @@ See the above repository for updates as well as full license text. */
 
 .tabbrowser-tab[fadein]:not([pinned]){
   min-width: var(--multirow-tab-min-width) !important;
-  flex-grow: var(--multirow-tab-dynamic-width);
+  flex-grow: var(--multirow-tab-dynamic-width) !important;
   /*
   Uncomment to enable full-width tabs, also makes tab dragging a tiny bit more sensible
   Don't set to none or you'll see errors in console when closing tabs
@@ -73,7 +74,8 @@ See the above repository for updates as well as full license text. */
 #tabs-newtab-button{ margin-bottom: 0 !important; }
 
 #tabbrowser-tabs[hasadjacentnewtabbutton][overflow="true"] > #tabbrowser-arrowscrollbox > #tabbrowser-arrowscrollbox-periphery > #tabs-newtab-button {
-  display: -moz-box !important;
+  display: flex !important;
+  align-items: center; /* Fx <112 compatibility */
 }
 
 #alltabs-button,

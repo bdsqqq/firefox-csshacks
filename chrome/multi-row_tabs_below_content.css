@@ -42,7 +42,8 @@ See the above repository for updates as well as full license text. */
   :root{ border-top-width: 0px !important }
 
   #navigator-toolbox-background{
-    -moz-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2; /* Fx <112 compatibility */
+    order: 2;
     border-bottom: 0px !important;
   }
   #navigator-toolbox{
@@ -51,7 +52,10 @@ See the above repository for updates as well as full license text. */
   /* Re-order window and tab notification boxes */
   #navigator-toolbox > div{ display: contents }
   .global-notificationbox,
-  #tab-notification-deck{ -moz-box-ordinal-group: 0 }
+  #tab-notification-deck{
+    -moz-box-ordinal-group: 0; /* Fx <112 compatibility */
+    order: -1;
+  }
 
   #titlebar{ -moz-appearance: none !important; } /* Try setting to "-moz-window-titlebar" if you face issues */
 
@@ -125,7 +129,6 @@ See the above repository for updates as well as full license text. */
   #menubar-items + spacer{ flex-grow: 1 }
 
   #toolbar-menubar > #menubar-items{
-    -moz-box-pack: center;
     height: 100%;
     visibility: hidden;
   }
@@ -175,6 +178,7 @@ See the above repository for updates as well as full license text. */
     max-height: var(--uc-scrollbox-max-height,1px);
     scrollbar-color: currentColor transparent;
     scrollbar-width: thin;
+    scrollbar-gutter: stable;
     scroll-snap-type: y mandatory;
   }
 
@@ -201,7 +205,7 @@ See the above repository for updates as well as full license text. */
 
   .tabbrowser-tab[fadein]:not([pinned]){
     min-width: var(--multirow-tab-min-width) !important;
-    flex-grow: var(--multirow-tab-dynamic-width);
+    flex-grow: var(--multirow-tab-dynamic-width) !important;
     /*
     Uncomment to enable full-width tabs, also makes tab dragging a tiny bit more sensible
     Don't set to none or you'll see errors in console when closing tabs
@@ -223,7 +227,15 @@ See the above repository for updates as well as full license text. */
   :root:not([customizing]) #TabsToolbar #new-tab-button,
   #tabbrowser-arrowscrollbox > spacer,
   .tabbrowser-tab::after{ display: none !important } /* Also disables tab separators since they mysteriously break tab-row scrolling */
-  
+  :root[BookmarksToolbarOverlapsBrowser] #PersonalToolbar{
+    position: absolute;
+    top: calc(var(--multirow-toolbar-height) + var(--multirow-top-padding));
+    width: 100vw;
+  }
+  :root[BookmarksToolbarOverlapsBrowser] #navigator-toolbox-background{
+    margin-bottom: 0 !important;
+    z-index: auto !important;
+  }
   @supports -moz-bool-pref("userchrome.multirowtabs.static-menubar.enabled"){
     :root{
       --multirow-menubar-height: 28px;
@@ -236,6 +248,9 @@ See the above repository for updates as well as full license text. */
     .titlebar-buttonbox-container{ background: none !important }
     :root:not([inFullscreen]) #nav-bar{
       top: calc(var(--multirow-menubar-height) + var(--multirow-top-padding));
+    }
+    :root[BookmarksToolbarOverlapsBrowser] #PersonalToolbar{
+      top: calc(var(--multirow-toolbar-height) + var(--multirow-top-padding) + var(--multirow-menubar-height));
     }
   }
 }

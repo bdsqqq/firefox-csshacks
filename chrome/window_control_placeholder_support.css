@@ -22,9 +22,7 @@ See the above repository for updates as well as full license text. */
 }
 
 @media  (-moz-platform: windows-win7),
-        (-moz-platform: windows-win8),
-        (-moz-os-version: windows-win7),
-        (-moz-os-version: windows-win8){
+        (-moz-platform: windows-win8){
   :root:is([tabsintitlebar], [sizemode="fullscreen"]) {
     --uc-window-control-width: 105px;
   }
@@ -58,9 +56,10 @@ See the above repository for updates as well as full license text. */
 :root[uidensity="compact"][sizemode="fullscreen"] #window-controls{ height: 32px }
 
 #nav-bar{
-  border-inline: var(--uc-window-drag-space-pre,0px) solid var(--toolbar-bgcolor);
+  border-inline: var(--uc-window-drag-space-pre,0px) solid transparent;
   border-inline-style: solid !important;
   border-right-width: calc(var(--uc-window-control-width,0px) + var(--uc-window-drag-space-post,0px));
+  background-clip: border-box !important;
 }
 
 /* Rules for window controls on left layout */
@@ -80,7 +79,12 @@ See the above repository for updates as well as full license text. */
   }
   :root[sizemode="fullscreen"] #TabsToolbar > .titlebar-buttonbox-container:last-child,
   :root[sizemode="fullscreen"] #window-controls{ right: unset; }
-  .titlebar-buttonbox-container{ -moz-box-ordinal-group: 0 !important; }
-  .titlebar-buttonbox{ -moz-box-direction: reverse }
+  .titlebar-buttonbox-container{
+    -moz-box-ordinal-group: 0 !important; /* Fx <112 compatibility */
+    order: -1 !important;
+  }
+  .titlebar-buttonbox{
+    -moz-box-direction: reverse; /* Fx <112 compatibility */
+    flex-direction: row-reverse;
+  }
 }
-
