@@ -8,7 +8,6 @@ Window controls will be all wrong without it.
 Additionally on Linux, you may need to get:
 linux_gtk_window_control_patch.css
 */
-/* Note: You must restart Firefox if you change the setting to select if firefox should hide toolbars in fullscreen. */
 
 .titlebar-buttonbox-container{
   position: fixed;
@@ -19,12 +18,14 @@ linux_gtk_window_control_patch.css
   z-index: 3;
   visibility: visible !important;
 }
-
-@media (-moz-gtk-csd-reversed-placement),
-       (-moz-platform: macos){
-  .titlebar-buttonbox-container{ left:0; right: unset !important; }
+#titlebar{
+  will-change: unset !important;
+  transition: none !important;
+  opacity: 1 !important;
 }
-@supports -moz-bool-pref("userchrome.force-window-controls-on-left.enabled"){
+@media (-moz-bool-pref: "userchrome.force-window-controls-on-left.enabled"),
+       (-moz-gtk-csd-reversed-placement),
+       (-moz-platform: macos){
   .titlebar-buttonbox-container{ left:0; right: unset !important; }
 }
 
@@ -57,10 +58,22 @@ linux_gtk_window_control_patch.css
   width: 100vw;
   height: calc(var(--tab-min-height) + 2 * var(--tab-block-margin,0px));
   --tabs-navbar-shadow-size: 0px;
+  background-color: light-dark(rgb(240, 240, 244), rgb(28, 27, 34)) !important;
+  z-index: 1;
+  :root[lwtheme] & {
+    background-image: var(--lwt-additional-images);
+    background-repeat: var(--lwt-background-tiling);
+    background-position: var(--lwt-background-alignment);
+    background-color: var(--lwt-accent-color) !important;
+  }
+  :root[lwtheme-image] & {
+    background-image: var(--lwt-header-image), var(--lwt-additional-images);
+    background-repeat: no-repeat, var(--lwt-background-tiling);
+    background-position: right top, var(--lwt-background-alignment);
+  }
 }
 #TabsToolbar:hover{ z-index: 1 }
 
-#TabsToolbar{ background-color: var(--lwt-accent-color); }
 #TabsToolbar-customization-target{ width: 100vw; }
 
 .tab-background{ border-top-style: none !important; }
@@ -72,9 +85,27 @@ linux_gtk_window_control_patch.css
 }
 :root[inFullscreen] #toolbar-menubar > .titlebar-buttonbox-container{ display: flex !important; }
 
-@supports -moz-bool-pref("browser.fullscreen.autohide"){
+@media (-moz-bool-pref: "browser.fullscreen.autohide"){
   #main-window[inFullscreen]:not([inDOMFullscreen]) > body::after{
-    margin-bottom: 1px;
+    margin-bottom: 0px;
+  }
+  :root[sizemode="fullscreen"] #TabsToolbar{
+    visibility: hidden;
+    transition: visibility 0s linear 100ms;
+  }
+  #mainPopupSet:has(> #tabContextMenu:hover) ~ #navigator-toolbox #TabsToolbar,
+  :root[sizemode="fullscreen"]:not([inDOMFullscreen]) #TabsToolbar:hover{
+    transition-delay: 0ms;
+    visibility: visible;
+  }
+  :root[sizemode="fullscreen"]:not([inDOMFullscreen]) #TabsToolbar::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    z-index: 1;
+    visibility: visible;
   }
   :root[inFullscreen] #navigator-toolbox:not(:hover) .titlebar-buttonbox-container{ display: none !important; }
 }

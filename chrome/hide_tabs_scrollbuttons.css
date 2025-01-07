@@ -19,19 +19,17 @@ See the above repository for updates as well as full license text. */
 :root[uidensity="compact"] #tabbrowser-tabs[overflow]{
   --uc-scrollbox-base-margin: -25px;
 }
-#tabbrowser-arrowscrollbox:not([scrolledtostart="true"]){
+#tabbrowser-arrowscrollbox:not([scrolledtostart]){
   --uc-scrollbox-overflow-start-margin: -1px;
 }
 #scrollbutton-up ~ spacer{
   visibility: visible !important;
 }
 spacer[part="overflow-start-indicator"]{
-  -moz-box-ordinal-group: 0; /* Fx < 112 compatibility */
   order: -1;
   margin-inline-start: var(--uc-scrollbox-overflow-start-margin,-0.5px) !important;
 }
 spacer[part="overflow-end-indicator"]{
-  -moz-box-ordinal-group: 2; /* Fx < 112 compatibility */
   order: 2;
 }
 
@@ -57,7 +55,9 @@ spacer[part="overflow-end-indicator"]{
   margin-inline-end: calc(0px - var(--tab-shadow-max-size,0px)) !important;
   background-image: var(--uc-scrollbutton-down-background);
 }
+scrollbox[orient="horizontal"],
 .scrollbox-clip{ margin-inline: var(--uc-scrollbox-margin,0px); }
+.scrollbox-clip > scrollbox[orient="horizontal"]{ margin-inline: initial }
 
 /* Need to reset some things for other scrollboxes */
 .menupopup-arrowscrollbox{

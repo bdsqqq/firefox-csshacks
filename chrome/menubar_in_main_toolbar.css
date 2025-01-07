@@ -7,7 +7,6 @@ See the above repository for updates as well as full license text. */
 :root[uidensity="compact"] #navigator-toolbox{ --uc-menubar-height: 30px }
 
 #titlebar{
-  -moz-box-direction: reverse; /* Fx <112 compatibility */
   flex-direction: column-reverse;
   -moz-appearance: none !important;
 }
@@ -21,7 +20,6 @@ See the above repository for updates as well as full license text. */
 }
 
 #menubar-items{
-  -moz-box-pack: center; /* Fx <112 compatibility */
   justify-content: center;
   pointer-events: initial;
   margin-top: 3px;
@@ -31,5 +29,5 @@ See the above repository for updates as well as full license text. */
 #nav-bar{ padding-left: 300px; }
 
 #toolbar-menubar > .titlebar-buttonbox-container{ display: none }
-:root[tabsintitlebar][sizemode="normal"] .titlebar-spacer,
-:root[tabsintitlebar] #TabsToolbar > .titlebar-buttonbox-container{ display: flex !important; }
+:root:is([tabsintitlebar],[customtitlebar])[sizemode="normal"] .titlebar-spacer,
+:root:is([tabsintitlebar],[customtitlebar]) #TabsToolbar > .titlebar-buttonbox-container{ display: flex !important; }

@@ -3,13 +3,10 @@ See the above repository for updates as well as full license text. */
 
 .tab-label-container{
   display: grid;
-  justify-content: safe center; /* Fx <112 compatibility */
-  align-items: safe center; /* Fx <112 compatibility */
   align-content: center;
 }
 
 .tab-secondary-label{
-  -moz-box-pack: center; /* Fx <112 compatibility */
   justify-content: center;
 }
 
@@ -18,5 +15,5 @@ See the above repository for updates as well as full license text. */
 
 .tabbrowser-tab[selected]:not(:hover) .tab-label-container:not([labeldirection="rtl"]),
 #tabbrowser-tabs:not([closebuttons="activetab"]) .tabbrowser-tab:not(:hover,[pinned]) .tab-label-container:not([labeldirection="rtl"]){
-  margin-inline-end: 7px;
+  margin-inline-end: 6px;
 }

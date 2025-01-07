@@ -39,6 +39,7 @@ Thanks to /u/skenera on reddit for suggesting animating background position and 
   margin-inline: 0 !important;
   --tab-shadow-max-size: 0px;
 }
+scrollbox[orient="horizontal"] > slot::after,
 .scrollbox-clip[orient="horizontal"] > scrollbox::after{
   content: "";
   display: flex;
@@ -68,7 +69,7 @@ Thanks to /u/skenera on reddit for suggesting animating background position and 
 }
 
 .tabbrowser-tab:not([selected]){ min-height: calc(var(--tab-min-height) - 1px) !important;  }
-.tabbrowser-tab[first-visible-unpinned-tab]{ margin-inline-start: 0 !important; }
+.tabbrowser-tab{ margin-inline-start: 0 !important; }
 
 vbox.tab-background[selected]{
   padding: 0px !important;

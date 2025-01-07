@@ -5,7 +5,6 @@ See the above repository for updates as well as full license text. */
 
 #tabbrowser-arrowscrollbox:not([overflowing]) .tabbrowser-tab[pinned] {
   flex-grow: 10;
-  -moz-box-flex: 10;
   max-width: 40px;
 }
 
@@ -13,9 +12,8 @@ See the above repository for updates as well as full license text. */
   max-width: 32px 
 }
 
-#tabbrowser-arrowscrollbox:not([overflowing]) .tab-content[pinned] {
+#tabbrowser-arrowscrollbox .tab-content[pinned] {
   padding: 0px !important;
-  -moz-box-pack: center; /* Fx <112 compatibility */
   justify-content: center;
 }
 
@@ -27,3 +25,4 @@ See the above repository for updates as well as full license text. */
 scrollbox[part][orient="horizontal"] {
     padding-inline: unset !important;
 }
+

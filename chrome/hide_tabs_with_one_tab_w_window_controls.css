@@ -20,18 +20,23 @@ Window controls will be all wrong without it
 :root{
   --uc-menubar-vertical-overlap: 28px; /* adjust as necessary */
 }
-#titlebar{ -moz-appearance: none !important; }
+#titlebar{
+  -moz-appearance: none !important;
+  will-change: unset !important;
+  transition: none !important;
+  opacity: 1 !important;
+}
+:root[sizemode="fullscreen"] #titlebar{ position: relative }
 /* We'll use window controls from menubar instead */
 #TabsToolbar > .titlebar-buttonbox-container { display: none }
 /* Hide overflow button unless tabs overflow - is necessary for collpasing tabs with one tab */
-#tabbrowser-tabs:not([overflow="true"]) ~ #alltabs-button{ display: none }
+#tabbrowser-tabs:not([overflow]) ~ #alltabs-button{ display: none }
 
 #tabbrowser-tabs,
 #tabbrowser-arrowscrollbox{ min-height: 0 !important; }
 
 #TabsToolbar > .titlebar-spacer[type="post-tabs"]{
   width: calc(var(--uc-window-control-width,0px) + var(--uc-window-drag-space-post,0px)) !important;
-  -moz-box-ordinal-group: 2; /* Fx < 112 compatibility */
   order: 2;
 }
 #toolbar-menubar > spacer{ pointer-events: none }
@@ -71,5 +76,4 @@ Window controls will be all wrong without it
 
 :root:not([customizing]) #toolbar-menubar[autohide][inactive] > #menubar-items{ pointer-events: none; opacity: 0 }
 
-:root[sizemode="fullscreen"] #TabsToolbar > #window-controls{ z-index: 2; }
 .titlebar-buttonbox{ color: inherit }

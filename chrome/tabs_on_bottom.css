@@ -19,11 +19,9 @@ have menubar permanently enabled and want it on top
   right:0;
   height: 40px;
 }
-@media (-moz-gtk-csd-reversed-placement),
+@media (-moz-bool-pref: "userchrome.force-window-controls-on-left.enabled"),
+       (-moz-gtk-csd-reversed-placement),
        (-moz-platform: macos){
-  .titlebar-buttonbox-container{ left:0; right: unset !important; }
-}
-@supports -moz-bool-pref("userchrome.force-window-controls-on-left.enabled"){
   .titlebar-buttonbox-container{ left:0; right: unset !important; }
 }
 
@@ -34,7 +32,6 @@ have menubar permanently enabled and want it on top
 .titlebar-buttonbox-container > .titlebar-buttonbox{ height: 100%; }
 
 #titlebar{
-  -moz-box-ordinal-group: 2; /* Fx <112 compatibility */
   order: 2;
   -moz-appearance: none !important;
   --tabs-navbar-shadow-size: 0px;
@@ -44,7 +41,6 @@ have menubar permanently enabled and want it on top
 #navigator-toolbox > div{ display: contents }
 .global-notificationbox,
 #tab-notification-deck{
-  -moz-box-ordinal-group: 2; /* Fx <112 compatibility */
   order: 2;
 }
 
@@ -54,7 +50,6 @@ have menubar permanently enabled and want it on top
 
 @media (-moz-gtk-csd-close-button){
   .titlebar-button{
-    -moz-box-orient: vertical; /* Fx <112 compatibility */
     flex-direction: column;
   }
 }
@@ -71,12 +66,11 @@ have menubar permanently enabled and want it on top
 toolbox#navigator-toolbox > toolbar#nav-bar.browser-toolbar{ animation: none; }
 #navigator-toolbox:hover #TabsToolbar{ animation: slidein ease-out 48ms 1 }
 #TabsToolbar > .titlebar-buttonbox-container{ visibility: visible }
-#navigator-toolbox:not(:-moz-lwtheme){ background-color: -moz-dialog }
+:root:not([lwtheme]) #navigator-toolbox{ background-color: -moz-dialog }
 
 /* Uncomment the following if you want bookmarks toolbar to be below tabs */
 /*
 #PersonalToolbar{
-  -moz-box-ordinal-group: 2;
   order: 2;
 }
 */

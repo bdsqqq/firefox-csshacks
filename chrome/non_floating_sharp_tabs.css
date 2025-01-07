@@ -10,7 +10,7 @@ See the above repository for updates as well as full license text. */
   --tabs-shadow-size: 1px !important;
   
   /* Remove next line if you want selected tab to have color other than toolbar background - then it follows your theme color  */
-  --lwt-selected-tab-background-color: var(--toolbar-bgcolor) !important; 
+  --tab-selected-bgcolor: var(--toolbar-bgcolor) !important;
 }
 
 /* Uncomment next line to force specific color for tab top line */
@@ -20,6 +20,7 @@ See the above repository for updates as well as full license text. */
 #nav-bar{
   /* This overrides value in compact_proton.css */
   box-shadow: 0 -1px 0 0 color-mix(in srgb, currentcolor 30%, transparent) !important;
+  border-top: none !important;
 }
 .tab-background[selected]{
   border-inline: 1px solid color-mix(in srgb, currentcolor 30%, transparent) !important;
@@ -30,11 +31,10 @@ See the above repository for updates as well as full license text. */
   --toolbarbutton-inner-padding: 7px !important;
 }
 /* Few exceptions for default light theme */
-#navigator-toolbox:not([movingtab]):-moz-lwtheme > #titlebar > #TabsToolbar{
+:root[lwtheme] #navigator-toolbox:not([movingtab]) > #TabsToolbar,
+:root[lwtheme] #navigator-toolbox:not([movingtab]) > #titlebar > #TabsToolbar{
   --toolbar-bgcolor: transparent;
 }
-
-.tab-background[selected]:not(:-moz-lwtheme){ background: var(--toolbar-bgcolor) !important; }
 
 #TabsToolbar-customization-target > .toolbarbutton-1 > .toolbarbutton-badge-stack,
 #TabsToolbar-customization-target > .toolbarbutton-1 > .toolbarbutton-icon{ border-radius: 2px !important;  }
@@ -42,7 +42,6 @@ See the above repository for updates as well as full license text. */
 /* tabs newtab button needs some special styling... */
 #tabs-newtab-button{
   padding-inline: 0 !important;
-  -moz-box-align: stretch !important; /* Fx < 112 compatibility */
   align-items: stretch !important;
 }
 /* We draw the icon as background-image to get correct scaling regardless of toolbar height */
@@ -91,6 +90,15 @@ See the above repository for updates as well as full license text. */
   outline: none !important;
 }
 
+/* This next rule set is needed for Fx 120, otherwise themes with translucent tabs would seem to have extra border separating them from toolbar below. */
+:root[lwtheme] #tabbrowser-tabs:not([movingtab]) .tabbrowser-tab > .tab-stack > .tab-background:is([selected], [multiselected]){
+  background-attachment: scroll, fixed, fixed !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(var(--tab-selected-bgcolor, transparent), var(--tab-selected-bgcolor, transparent)), var(--lwt-additional-images,none), var(--lwt-header-image, none) !important;;
+  background-position: 0 0, var(--lwt-background-alignment), right top !important;
+  background-repeat: repeat-x, var(--lwt-background-tiling), no-repeat !important;
+  background-size: auto 100%, var(--lwt-background-size, auto auto), auto auto !important;
+}
 .tab-background:not([selected])[multiselected]{
   background: color-mix(in srgb, currentColor 11%, transparent) !important;
   margin-inline-start: -1px; 
@@ -120,7 +128,27 @@ See the above repository for updates as well as full license text. */
 
 /* moves context-line to the bottom */
 .tab-context-line{
-  -moz-box-ordinal-group: 2; /* Fx < 112 compatibility */
   order: 2;
   margin-inline: 10px !important;
+  margin-block: 0px !important;
 }
+/* Move group line to the top */
+.tab-group-label-container::after{
+  inset-block: 0 auto !important;
+}
+.tab-group-line{
+  order: -1;
+}
+:where(#navigator-toolbox) > #TabsToolbar,
+#titlebar{
+  will-change: unset !important;
+  transition: none !important;
+  opacity: 1 !important;
+}
+/* OPTIONAL: Make tab group line a bit more thick - this could be useful if you have a theme where
+group-line color doesn't have enough contrast to be visible. */
+/*
+#tabbrowser-tabs{
+  --tab-group-line-thickness: 3px;
+}
+*/
